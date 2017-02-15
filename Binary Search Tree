@@ -1,0 +1,144 @@
+#include<iostream.h>
+#include<conio.h>
+class BST
+{
+ int data;
+ BST *lchild;
+ BST *rchild;
+ public:
+ BST* insert(int, BST *);
+ BST* search(int, BST *);
+ BST* del(int, BST*);
+ void in_traverse(BST *);
+};
+BST* BST::insert(int item,BST *root)
+{
+ BST *temp,*curr,*prev;
+ temp=new BST;
+ temp->data=item;
+ temp->rchild=NULL;
+ temp->lchild=NULL;
+ if(root==NULL)
+  return temp;
+ prev=NULL;
+ curr=root;
+ while(curr!=NULL)
+ {
+  prev=curr;
+  if(item==curr->data)
+  {
+   cout<<"Duplicate values not allowed";
+   delete temp;
+   return root;
+  }
+  if(item<curr->data)
+   curr=curr->lchild;
+  else
+   curr=curr->rchild;
+ }
+ if(item<prev->data)
+  prev->lchild=temp;
+ else
+  prev->rchild=temp;
+ return root;
+}
+BST* BST::search(int item,BST *root)
+{
+ BST *curr;
+ if(root==NULL)
+  return NULL;
+ while(curr!=NULL)
+ {
+  if(item==curr->data) return curr;
+  if(item<curr->data) curr=curr->lchild;
+  else curr=curr->rchild;
+ }
+ return NULL;
+}
+BST* BST::del(int item, BST *root)
+{
+ BST *curr,*p,*s,*q;
+ if(root==NULL)
+ {
+  cout<<endl<<"Tree is empty";
+  return root;
+ }
+ p=NULL;
+ curr=NULL;
+ while(curr!=NULL)
+ {
+  if(item==curr->data)
+   break;
+  p=curr;
+  if(item<curr->data)
+   curr=curr->lchild;
+  else
+   curr=curr->rchild;
+ }
+ if(curr==NULL)
+ {
+  cout<<endl<<"Item not found"<<endl;
+  return root;
+ }
+ if(curr->lchild==NULL)
+  q=curr->rchild;
+ else if(curr->rchild==NULL)
+  q=curr->lchild;
+ else
+ {
+  s=curr->rchild;
+  while(s->lchild!=NULL)
+   s=s->lchild;
+ }
+ s->lchild=curr->lchild;
+ q=curr->rchild;
+ if(p==NULL) return q;
+ if(curr==p->lchild) p->lchild=q;
+ else p->rchild=q;
+ delete curr;
+ return root;
+}
+void BST::in_traverse(BST *root)
+{
+ if(root!=NULL)
+ {
+  in_traverse(root->lchild);
+  cout<<root->data<<" ";
+  in_traverse(root->rchild);
+ }
+}
+void main()
+{
+ clrscr();
+ BST *root,*temp;
+ root=temp=NULL;
+ int i,item;
+ char ch;
+ do
+ {
+ clrscr();
+ cout<<"Enter Choice"<<endl
+	 <<"1. Insert element"<<endl
+	 <<"2. Search element"<<endl
+	 <<"3. Delete element"<<endl
+	 <<"4. Inorder traversal"<<endl;
+	 cin>>i;
+ switch(i)
+ {
+  case 1:cout<<"Enter value"<<endl; cin>>item;
+		 root=root->insert(item,root);
+		 break;
+  case 2:cout<<"Enter value"<<endl; cin>>item;
+		 temp=root->search(item,root);
+		 if(temp!=NULL)
+		  cout<<"Item found"<<endl;
+		 break;
+  case 3:cout<<"Enter value"<<endl; cin>>item;
+		 root=root->del(item,root);
+		 break;
+  case 4:root->in_traverse(root); break;
+ }
+ cout<<"Do another? (y/n)"<<endl;
+ cin>>ch;
+ }while(ch!='n');
+}
