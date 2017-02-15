@@ -1,0 +1,66 @@
+
+#include<iostream.h>
+#include<conio.h>
+
+ void main()
+ { 
+   clrscr();
+   int max, min, mid, A[50], n, item, flag=0;
+   
+   cout<<"\n Enter size of array : ";
+   cin>>n;
+   
+   cout<<"\n Enter the array elements in ascending order : ";
+   
+   for(int i=0; i<n; i++)
+    cin>>A[i];
+   
+   min=0;
+   max=n;
+   mid=n/2;
+   
+   cout<<"\n Enter element to be searched : ";
+   cin>>item;
+   
+   for(int j=0; j<n; j++)
+   { 
+      if(item==A[min])
+      { 
+        cout<<"\n Element found at "<<(min+1); 
+        flag=1; 
+        break;
+      }
+      
+      else if(item==A[mid])
+      { 
+        cout<<"\n Element found at "<<(mid+1); 
+        flag=1; 
+        break;
+      }
+      
+      else if(item==A[max])
+      {  
+        cout<<"\n Element found at "<<(max+1); 
+        flag=1; 
+        break;
+      }
+      
+      else if((item>A[min])&&(item<A[mid]))
+     { 
+        max=mid; 
+        mid=mid/2;
+     }
+     
+      else if((item>A[mid])&&(item<A[max]))
+     { 
+        min=mid; 
+        mid=(max-min)/2;
+     }
+     
+   }
+   
+   if(flag==0)
+    cout<<"\n Element not found. ";
+    
+   getch();
+ }
