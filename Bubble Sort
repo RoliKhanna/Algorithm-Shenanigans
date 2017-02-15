@@ -1,0 +1,33 @@
+
+#include<iostream.h>
+#include<conio.h>
+
+ void main()
+ { 
+   clrscr();
+   
+   int A[50], n, temp;
+   
+   cout<<"\n Enter size of array : ";
+   cin>>n;
+   
+   cout<<"\n Enter elements of array : ";
+   for(int i=0; i<n; i++)
+    cin>>A[i];
+    
+   for(int j=0; j<n; j++)
+   { for(int k=(j+1); k<n; k++)
+     { if(A[k]<A[j])
+       { temp=A[k];
+	 A[k]=A[j];
+	 A[j]=temp; }
+     }
+   }
+   
+   cout<<"\n The sorted array is : ";
+   for(int m=0; m<n; m++)
+    cout<<A[m]<<" ";
+    
+   getch();
+   
+ }
