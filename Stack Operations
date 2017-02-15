@@ -73,3 +73,67 @@ void main()
   options(S);
   getch();
 }
+
+// CHECKING IF STRING IS A PALINDROME USING STACK
+
+#include<iostream.h>
+#include<conio.h>
+#include<String.h>
+#include<stdio.h>
+
+class stack
+ {
+  char s[50];
+  int top;
+  public:
+  stack ()
+   {
+    top=-1;
+    }
+   void push(char);
+   char pop();
+  };
+
+  void stack :: push(char ele)
+   {
+    if(top==49)
+    cout<<"overflow";
+    else
+    top++;
+    s[top]=ele;
+   }
+
+  char stack :: pop()
+   {
+    if(top==-1)
+    cout<<"underflow";
+    else
+     top--;
+     return(s[top+1]);
+    }
+
+   void main()
+    {
+     clrscr();
+     stack st1;
+     char str[50];
+     cout<<"Enter the String";
+     gets(str);
+     int l =strlen();
+     for(int i=0; i<l;i++)
+      {
+	 st1.push(str[i]);
+      }
+     char str1[50];
+      for(int j=0;j<l;j++)
+       {
+	 str1[j]=st1.pop();
+       }
+
+      if(!(strcmp(str,str1)))
+      cout<<"Plaindrome";
+      else
+      cout<<"Not a Palindrome";
+
+      getch();
+     }
