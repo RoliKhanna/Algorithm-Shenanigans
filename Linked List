@@ -1,0 +1,398 @@
+#include<iostream.h>
+#include<conio.h>
+
+class LinkedList
+{
+ int data;
+ LinkedList *next;
+ public:
+ LinkedList* Create();
+ LinkedList* Insert_b(LinkedList *,int);
+ LinkedList* Insert_a(LinkedList *,int);
+ LinkedList* Delete(LinkedList *,int);
+ void Traverse(LinkedList *);
+ LinkedList* Reverse(LinkedList *);
+ LinkedList* Sort(LinkedList *);
+ LinkedList* Del_Alt(LinkedList *);
+ LinkedList* Insert_Ele(LinkedList *, int);
+};
+LinkedList* LinkedList::Create()
+{
+ char ch;
+ int num;
+ LinkedList *head, *node;
+ node=new LinkedList();
+ head=node;
+ do
+ {
+   cout<<endl<<"Enter data"<<endl;
+   cin>>num;
+   node->data=num;
+   cout<<"Do another? (y/n)"<<endl;
+   cin>>ch;
+   if(ch=='y')
+    {
+     node->next=new LinkedList;
+     node=node->next;
+    }
+   if(ch=='n')
+    {
+     node->next=NULL;
+     break;
+    }
+ }while(ch!='n');
+ return (head);
+}
+LinkedList* LinkedList::Insert_b(LinkedList *head,int ele)
+{
+ int num,flag=1;
+ cout<<endl<<"Enter new value to be inserted."<<endl;
+ cin>>num;
+ LinkedList *temp,*newnode,*prev,*h;
+ newnode=new LinkedList();
+ newnode->data=num;
+ temp=head;
+ if(head==NULL)
+ {
+  cout<<endl<<"List is Empty!"<<endl;
+  h=NULL;
+ }
+ else if(head->data==ele)
+ {
+  h=newnode;
+  h->next=head;
+  flag=0;
+ }
+ else
+ {
+  prev=head;
+  temp=prev->next;
+  while(temp!=NULL)
+  {
+   if(temp->data==ele)
+   {
+     prev->next=newnode;
+     newnode->next=temp;
+     flag=0;
+     break;
+   }
+   prev=temp;
+   temp=temp->next;
+  }
+   h=head;
+ }
+  if(flag==1)
+   cout<<endl<<"Element not found in List!"<<endl;
+  delete temp;
+  delete prev;
+  return (h);
+}
+LinkedList* LinkedList::Insert_a(LinkedList *head,int ele)
+{
+ int num,flag=1;
+ cout<<endl<<"Enter new value to be inserted."<<endl;
+ cin>>num;
+ LinkedList *temp,*newnode,*prev,*h;
+ newnode=new LinkedList();
+ newnode->data=num;
+ temp=head;
+ if(head==NULL)
+ {
+  cout<<endl<<"List is Empty!"<<endl;
+  h=NULL;
+ }
+ /*else if(head->data==ele)
+ {
+  newnode->next=head->next;
+  head->next=newnode;
+  flag=0;
+  h=head;
+ } */
+ else
+ {
+  temp=head;
+  while(temp->next!=NULL)
+  {
+   if(temp->data==ele)
+   {
+     newnode->next=temp->next;
+     temp->next=newnode;
+     flag=0;
+     break;
+   }
+   temp=temp->next;
+  }
+  h=head;
+ }
+ if(flag==1)
+   cout<<endl<<"Element not found in List!"<<endl;
+  delete temp;
+  delete prev;
+  return (h);
+}
+LinkedList* LinkedList::Delete(LinkedList *head,int ele)
+{
+ int flag=1;
+ LinkedList *h,*temp,*prev;
+ prev=head;
+ h=head;
+ if(head==NULL)
+ {
+  cout<<endl<<"List is empty!"<<endl;
+ }
+ else if(head->next==NULL&&head->data==ele)
+ {
+  delete head;
+  h=NULL;
+  flag=0;
+ }
+ else
+ {
+  prev=head;
+  temp=prev->next;
+  while(temp!=NULL)
+  {
+   if(temp->data==ele)
+   {
+    prev->next=temp->next;
+    delete temp;
+    flag=0;
+    break;
+   }
+   prev=temp;
+   temp=temp->next;
+  }
+ }
+ if(flag==1)
+  cout<<endl<<"Element not found in list!"<<endl;
+ delete temp;
+ delete prev;
+ return h;
+}
+void LinkedList::Traverse(LinkedList *head)
+{
+ LinkedList *temp;
+ temp=head;
+ cout<<endl<<"Current Linked List State"<<endl;
+ if(head==NULL)
+ {
+  cout<<endl<<"List is empty!"<<endl;
+ }
+ else
+ {
+  while(temp!=NULL)
+  {
+   cout<<temp->data<<" --> ";
+   temp=temp->next;
+  }
+  cout<<"NULL";
+ }
+ delete temp;
+}
+LinkedList* LinkedList::Reverse(LinkedList *head)
+{
+ int count=0,i,j,k;
+ LinkedList *temp1,*temp2,*h,*temp3;
+ temp1=new LinkedList();
+ temp2=new LinkedList();
+ temp3=new LinkedList();
+ temp1=head;
+ while(temp1!=NULL)
+ {
+  count++;
+ }
+ if(count==0)
+ {
+  cout<<endl<<"List is empty!"<<endl;
+ }
+ else if(count==1)
+ {
+  h=head;
+ }
+ else
+ {
+  temp1=head;
+  temp2=head;
+  k=count;
+  for(i=0;i<count/2;i++)
+  {
+   temp2=head;
+   j=0;
+   while(j < (k-i-1))
+   {
+   temp2=temp2->next;
+   j++;
+   }
+   temp3->data=temp1->data;
+   temp1->data=temp2->data;
+   temp2->data=temp3->data;
+   temp1=temp1->next;
+  }
+  h=head;
+ }
+ delete temp1;
+ delete temp2;
+ delete temp3;
+ return h;
+}
+LinkedList* LinkedList::Sort(LinkedList *head)
+{
+ LinkedList *temp,*temp2,*small,*h,*prev;
+ temp2=new LinkedList();
+ h=head;
+ int i,count;
+ temp=head;
+ while(temp!=NULL)
+  count++;
+ if(count==0)
+  cout<<endl<<"List is Empty!"<<endl;
+ else if(count==1)
+  h=head;
+ else
+ {
+  small=head;
+  prev=head;
+  while(prev->next!=NULL)
+  {
+   temp=prev;
+   while(temp!=NULL)
+   {
+    if(temp->data < small->data)
+    {
+     small=temp;
+    }
+    temp=temp->next;
+   }
+   temp2->data=prev->data;
+   prev->data=small->data;
+   small->data=temp2->data;
+   prev=prev->next;
+  }
+ }
+ delete temp;
+ delete temp2;
+ delete small;
+ delete prev;
+ return h;
+}
+LinkedList* LinkedList::Del_Alt(LinkedList *head)
+{
+ LinkedList *h,*temp;
+ h=head;
+ if(head==NULL||head->next==NULL)
+  return head;
+ while(head!=NULL)
+ {
+  temp=head->next;
+  head->next=temp->next;
+  delete temp;
+  head=head->next;
+ }
+ delete temp;
+ return (h);
+}
+LinkedList* LinkedList::Insert_Ele(LinkedList *head, int ele)
+{
+ LinkedList *temp,*newnode,*h,*prev,*last;
+ newnode = new LinkedList();
+ newnode->data=ele;
+ prev=head;
+ h=head;
+ last=head;
+ while(last->next!=NULL)
+  last=last->next;
+ if(head==NULL)
+  h=newnode;
+ else if(ele < head->data)
+  {
+   h=newnode;
+   h->next=head;
+  }
+ else if(ele > last->data)
+  {
+   last->next=newnode;
+   newnode->next=NULL;
+  }
+ else
+  {
+   while(prev!=NULL)
+   {
+    temp=prev->next;
+    if(temp->data > ele)
+    {
+     prev->next=newnode;
+     newnode->next=temp;
+    }
+    prev=prev->next;
+   }
+  }
+  delete temp;
+  delete prev;
+  delete last;
+ return h;
+}
+
+void main()
+{
+ clrscr();
+ int i,num;
+ char ch;
+ LinkedList *head=NULL,l;
+ cout<<endl<<"Create Linked List"<<endl;
+ head=l.Create();
+ clrscr();
+ do
+ {
+ cout<<endl<<"Enter choice"
+     <<endl<<"1-> Insert Element Before "
+     <<endl<<"2-> Insert Element After "
+     <<endl<<"3-> Delete Element "
+     <<endl<<"4-> Traverse "
+     <<endl<<"5-> Reverse List"
+     <<endl<<"6-> Sort List "
+     <<endl<<"7-> Delete Alternate Elements "
+     <<endl<<"8-> Insert Element "<<endl;
+  cin>>i;
+  switch(i)
+  {
+  case 1: cout<<endl<<"Enter Value before which Insertion is to be done."<<endl;
+	  cin>>num;
+	  head=l.Insert_b(head,num);
+	  l.Traverse(head);
+	  break;
+  case 2: cout<<endl<<"Enter Value after which Insertion is to be done."<<endl;
+	  cin>>num;
+	  head=l.Insert_a(head,num);
+	  l.Traverse(head);
+	  break;
+  case 3: cout<<endl<<"Enter Value to be Deleted!"<<endl;
+	  cin>>num;
+	  head=l.Delete(head,num);
+	  l.Traverse(head);
+	  break;
+  case 4: l.Traverse(head);
+	  break;
+  case 5: head=l.Reverse(head);
+	  l.Traverse(head);
+	  break;
+  case 6: head=l.Sort(head);
+	  l.Traverse(head);
+	  break;
+  case 7: head=l.Del_Alt(head);
+	  l.Traverse(head);
+	  break;
+  case 8: head=l.Sort(head);
+	  cout<<endl<<"Enter Value."<<endl;
+	  cin>>num;
+	  head=l.Insert_Ele(head,num);
+	  l.Traverse(head);
+	  break;
+  default: cout<<endl<<"Wrong choice"<<endl;
+  }
+  cout<<endl<<"Do another? (y/n)"<<endl;
+  cin>>ch;
+  clrscr();
+ }
+ while(ch!='n');
+ delete head;
+}

@@ -1,0 +1,100 @@
+// Implementation of Queue ADT using array
+
+#include<iostream.h>
+#include<conio.h>
+
+class queue
+{ int front, rear, Q[25];
+  public:
+  queue()
+  { front=-1;
+    rear=-1;
+  }
+  void add(int);
+  int del();
+  int isfull();
+  int isempty();
+  void display();
+};
+
+void queue::add(int a)
+{ if(rear==24)
+   cout<<"\n Queue is full.";
+  else
+  { if((front==-1)&&(rear==-1))
+     front=0;
+    rear++;
+    Q[rear]=a;
+  }
+}
+
+int queue::del()
+{ int item;
+  if((front==-1)&&(rear==-1))
+  { cout<<"\n Queue is empty. ";
+    return 0;
+  }
+  else if(front==rear)
+  { item=Q[front];
+    front=-1;
+    rear=-1;
+    return item;
+  }
+  else
+  { item=Q[front];
+    front++;
+    return item;
+  }
+}
+
+int queue::isfull()
+{ if(rear==24)
+   return 1;
+  else
+   return 0;
+}
+
+int queue::isempty()
+{ if((rear==-1)&&(front==-1))
+   return 1;
+  else
+   return 0;
+}
+
+void queue::display()
+{ queue Z;
+  if(Z.isempty())
+   cout<<"\n Queue is empty.";
+  else if(Z.isfull())
+   cout<<"\n Queue is full.";
+  else
+  { for(int i=front; front<=rear; i++)
+     cout<<Q[i]<<" ";
+  }
+}
+
+void main()
+{ clrscr();
+  queue A;
+  int size, temp;
+  char choice;
+  cout<<"\n Enter size of array (<25): ";
+  cin>>size;
+  cout<<"\n Enter queue elements : ";
+  for(int i=0; i<size; i++)
+  { cin>>temp;
+    A.add(temp);
+    cout<<endl;
+  }
+  cout<<"\n Do you wish to delete an element? (y/n)";
+  cin>>choice;
+  while((choice=='y')||(choice=='Y'))
+  { int ele=A.del();
+    cout<<"\n Deleted element is "<<ele;
+    cout<<"\n\n Do you wish to delete an element? (y/n) : ";
+    cin>>choice;
+  }
+  cout<<"\n Displaying given Queue : ";
+  A.display();
+  getch();
+}
